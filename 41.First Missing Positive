@@ -1,3 +1,11 @@
+/*
+1、基本思路是桶排序；如果元素的大小在范围内（1~n）,则检查下数组中对应的桶位置的数字是否和此元素相等，不相等则交换，交换完以后必须继续检查原位置的数字是
+否需要交换（如果直接循环变量自增不检查的话，会导致该元素没有机会再被放到正确位置上），直至不需要交换后，循环变量自增；
+2、临时变量存储优化有作用，提升1ms。
+3、其他较优解法：直接将不合法的数字设置成n+1；遍历数组，如果当前元素在范围内，就将对应桶位置的数字设置成负数（如果原本为正的话）；再遍历一遍检查下非负的
+位置即为解。
+*/
+
 class Solution {
     public int firstMissingPositive(int[] nums) {
         int n = nums.length;
@@ -24,4 +32,42 @@ class Solution {
         nums[i] = nums[j];
         nums[j] = temp;        
     }
+}
+
+网友：
+public class Solution {
+public int firstMissingPositive(int[] nums) {
+    int n = nums.length;
+    
+    // 1. mark numbers (num < 0) and (num > n) with a special marker number (n+1) 
+    // (we can ignore those because if all number are > n then we'll simply return 1)
+    for (int i = 0; i < n; i++) {
+        if (nums[i] <= 0 || nums[i] > n) {
+            nums[i] = n + 1;
+        }
+    }
+    // note: all number in the array are now positive, and on the range 1..n+1
+    
+    // 2. mark each cell appearing in the array, by converting the index for that number to negative
+    for (int i = 0; i < n; i++) {
+        int num = Math.abs(nums[i]);
+        if (num > n) {
+            continue;
+        }
+        num--; // -1 for zero index based array (so the number 1 will be at pos 0)
+        if (nums[num] > 0) { // prevents double negative operations
+            nums[num] = -1 * nums[num];
+        }
+    }
+    
+    // 3. find the first cell which isn't negative (doesn't appear in the array)
+    for (int i = 0; i < n; i++) {
+        if (nums[i] >= 0) {
+            return i + 1;
+        }
+    }
+    
+    // 4. no positive numbers were found, which means the array contains all numbers 1..n
+    return n + 1;
+}
 }
