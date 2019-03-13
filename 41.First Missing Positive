@@ -1,0 +1,27 @@
+class Solution {
+    public int firstMissingPositive(int[] nums) {
+        int n = nums.length;
+        int i = 0;
+        while(i < n){
+            int temp = nums[i];
+            if(temp > 0 && temp <= n && temp != nums[temp - 1]){
+                swap(nums, i , temp-1);//交换后nums[index-1] = index，哪怕后面再遍历到也不会再交换；如果循环后某个nums[index-1] != index，说明确实没有                
+            }
+            else{
+                i ++;
+            }
+        }
+        for(i = 0; i < n; i ++){
+            if(nums[i] != i + 1){
+                break;
+            }
+        }
+        return i+1;
+        
+    }
+    private void swap(int[] nums, int i, int j){
+        int temp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = temp;        
+    }
+}
