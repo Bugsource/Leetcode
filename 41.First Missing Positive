@@ -13,12 +13,12 @@ class Solution {
         while(i < n){
             int temp = nums[i];
             if(temp > 0 && temp <= n && temp != nums[temp - 1]){
-                swap(nums, i , temp-1);//交换后nums[index-1] = index，哪怕后面再遍历到也不会再交换；如果循环后某个nums[index-1] != index，说明确实没有                
+                swap(nums, i , temp-1);//交换后nums[index-1] = index，哪怕后面再遍历到也不会再交换                
             }
             else{
                 i ++;
             }
-        }
+        }//循环结束后，所有合法数字都会在应该的位置上，某个nums[index-1] != index，说明确实没有
         for(i = 0; i < n; i ++){
             if(nums[i] != i + 1){
                 break;
