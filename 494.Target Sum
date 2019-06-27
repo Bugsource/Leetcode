@@ -1,0 +1,48 @@
+1、暴力dfs
+class Solution {
+    public int findTargetSumWays(int[] nums, int S) {
+        int n = nums.length;
+        return dfs(nums, 0, n, S);        
+    }
+    
+    private int dfs(int[] nums, int index, int n, int S){        
+        if(index >= n){
+            if(S == 0){
+                return 1;
+            }else{
+                return 0;
+            }
+        }
+        int curr = nums[index];
+        return dfs(nums, index+1, n, S+curr) + dfs(nums, index+1, n, S-curr);
+        
+    }
+}
+
+2、dfs加上map，避免重复计算
+class Solution {
+    public int findTargetSumWays(int[] nums, int S) {
+        int n = nums.length;
+        return dfs(nums, 0, n, S, new HashMap<String, Integer>());        
+    }
+    
+    private int dfs(int[] nums, int index, int n, int S, Map<String, Integer> map){        
+        String key = index + "->" + S;
+        if(map.containsKey(key)){
+            return map.get(key);            
+        }
+        if(index >= n){
+            if(S == 0){
+                return 1;
+            }else{
+                return 0;
+            }
+        }
+        int curr = nums[index];
+        int fromNextIndexToS = dfs(nums, index+1, n, S+curr, map) + dfs(nums, index+1, n, S-curr, map);
+        map.put(key, fromNextIndexToS);//map存储的是从当前索引开始，所有数字加起来等于S的方案数目
+        return fromNextIndexToS;        
+    }
+}
+
+3、dp
