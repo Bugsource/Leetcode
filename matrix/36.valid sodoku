@@ -1,0 +1,43 @@
+/*此题精髓在于如何用一个循环变量完成二维数组的遍历*/
+class Solution {
+    public boolean isValidSudoku(char[][] board) {        
+        for(int i = 0; i < 9; i ++){
+            boolean[] rowVisited = new boolean[10];
+            boolean[] colVisited = new boolean[10];
+            boolean[] blockVisited = new boolean[10];
+            for(int j = 0; j < 9; j ++){
+                char row = board[i][j];//i行元素
+                if(row >= '1' && row <= '9'){
+                    int rowDigit = row-'0';
+                    if(rowVisited[rowDigit]){
+                        return false;
+                    }else{
+                        rowVisited[rowDigit] = true;
+                    }                    
+                }
+                
+                char col = board[j][i];//i列元素
+                if(col >= '1' && col <= '9'){
+                    int colDigit = col-'0';
+                    if(colVisited[colDigit]){
+                        return false;
+                    }else{
+                        colVisited[colDigit] = true;
+                    }                    
+                }
+                
+                int m = i/3*3+ j/3, n = i%3*3 + j%3;//i用来控制方块的起始位置，j用来遍历每个方块；用一个变量就能遍历二维数组
+                char box = board[m][n];
+                if(box >= '1' && box <= '9'){
+                    int boxDigit = box-'0';
+                    if(blockVisited[boxDigit]){
+                        return false;
+                    }else{
+                        blockVisited[boxDigit] = true;
+                    }                    
+                }                
+            }
+        }        
+        return true;        
+    }
+}
