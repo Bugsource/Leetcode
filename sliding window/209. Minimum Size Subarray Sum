@@ -1,4 +1,3 @@
-```
 /*O(n)解法，滑窗法*/
 class Solution {
     public int minSubArrayLen(int s, int[] nums) {
@@ -19,4 +18,3 @@ class Solution {
 
 /*O(nlongn)，关键在于如何构造有序数组以二分，因为都是正数，所以累加和只能递增，构造Sum[]数组，存放0到i-1的累加和，然后从i到high之间找sum[i]+target*/
 有空实现
-```
