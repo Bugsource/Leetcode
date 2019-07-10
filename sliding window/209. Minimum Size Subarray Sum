@@ -1,0 +1,22 @@
+```
+/*O(n)解法，滑窗法*/
+class Solution {
+    public int minSubArrayLen(int s, int[] nums) {
+        int low = 0, high = 0, len = nums.length, minLen = len+1, currSum = 0;//minLen初值为不可能达到的大值，用来最终判断是否达到过s
+        
+        while(high < len){
+            currSum += nums[high];
+            while(currSum >= s){//滑窗法，如果当前大于等于s，则移动左指针，并且更新minLen，直到当前和小于s，再从当前low开始继续移动high累加
+                minLen = Math.min(minLen, high-low+1);
+                currSum -= nums[low];
+                low++;
+            }
+            high++;
+        }
+        return minLen == len+1 ? 0 : minLen;        
+    }
+}
+
+/*O(nlongn)，关键在于如何构造有序数组以二分，因为都是正数，所以累加和只能递增，构造Sum[]数组，存放0到i-1的累加和，然后从i到high之间找sum[i]+target*/
+有空实现
+```
