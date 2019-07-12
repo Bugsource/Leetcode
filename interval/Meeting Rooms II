@@ -1,0 +1,5 @@
+优先队列贪心
+This problem can be solved using the greedy method. We sort the intervals using the start time, then we try to merge the next one that has the smallest start time ts from the remaining intervals with the previous interval that has smallest end time te. 
+If ts < te, that means the interval with start time ts can not be merged with the all the previous intervals since te is the minimum end time. So we start a new room. 
+If ts >= te,  this means the interval with start time ts can be merged with the room with end time te. 
+We can use a priority query to record the end time, so we can get the minimum end time in O(logN) time. 
