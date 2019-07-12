@@ -1,0 +1,18 @@
+11. Container With Most Waterclass Solution {
+    public int maxArea(int[] height) {
+        int maxArea = 0;
+        int low = 0, high = height.length-1;
+        while(low < high){
+            int currArea = 0;
+            if(height[low] < height[high]){
+                currArea = height[low] * (high-low);
+                low ++;                
+            }else{
+                currArea = height[high] * (high-low);
+                high --;                
+            }
+            maxArea = Math.max(maxArea, currArea);
+        }
+        return maxArea;        
+    }
+}
