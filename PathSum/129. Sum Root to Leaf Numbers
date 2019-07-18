@@ -1,0 +1,46 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+ 
+ class Solution {
+    public int sumNumbers(TreeNode root) {
+        int[] total = new int[]{0};
+        helper(root, 0, total);
+        return total[0];        
+    }
+    private void helper(TreeNode root, int currSum, int[] total){
+        if(root == null){
+            return;
+        }
+        currSum = currSum * 10 + root.val;
+        if(root.left == null && root.right == null){
+            total[0] += currSum;
+            return;
+        }        
+        helper(root.left, currSum, total);
+        helper(root.right, currSum, total);
+    }
+}
+
+
+class Solution {
+    public int sumNumbers(TreeNode root) {        
+        return helper(root, 0);       
+    }
+    private int helper(TreeNode root, int currSum){//helper的含义是计算从该节点出发的所有路径和的总和，因此无需再用一个引用变量算所有路径的总和
+        if(root == null){
+            return 0;
+        }
+        currSum = currSum * 10 + root.val;
+        if(root.left == null && root.right == null){
+            return currSum;
+        }        
+        return helper(root.left, currSum) + helper(root.right, currSum);
+    }
+}
