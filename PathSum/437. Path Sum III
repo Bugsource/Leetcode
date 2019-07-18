@@ -1,0 +1,50 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+ 1、双重递归，效率低
+class Solution {    
+public:
+    int pathSum(TreeNode* root, int sum) {
+        if(root == NULL)
+            return 0;  
+        return helper(root,0,sum) + pathSum(root->left,sum) + pathSum(root->right,sum);
+    }
+
+    int helper(TreeNode* root, int currSum, int sum)
+    {
+        if(root == NULL)
+            return 0;        
+        currSum += root->val;
+        return (currSum == sum) + helper(root->left,currSum,sum) + helper(root->right,currSum,sum);        
+    }
+};
+
+2、前缀和+dfs+回溯
+关键点：
+1)map存的是当前路径的当前节点之前，从根节点出发到某个节点的累加和；注意是当前路径，意味着进入其他路径时必须减去当前节点的值，回溯；
+2)由根节点到当前节点的累加和，减去根节点到某个节点的累加和，能够得到某节点到当前节点的累加和；
+3)递归时，计算以当前节点为结尾的所有符合条件的路径数，加上以左、右子节点为结尾的所有符合条件的路径数，就是总数；
+class Solution {
+    public int pathSum(TreeNode root, int sum) {
+        Map<Integer, Integer> prefixSum = new HashMap<>();//存储当前路径的当前节点之前的所有前缀和
+        prefixSum.put(0, 1);//边界条件
+        return helper(root, 0, sum, prefixSum);        
+    }
+    private int helper(TreeNode root, int currSum, int target, Map<Integer, Integer> prefixSum){
+        if(root == null){
+            return 0;
+        }
+        currSum += root.val;
+        int count = prefixSum.getOrDefault(currSum-target, 0);//以当前节点为结尾的路径之和为目标的个数
+        prefixSum.put(currSum, prefixSum.getOrDefault(currSum, 0)+1);
+        count += helper(root.left, currSum, target, prefixSum) + helper(root.right, currSum, target, prefixSum);
+        prefixSum.put(currSum, prefixSum.getOrDefault(currSum, 0)-1);//回溯，以进入其他路径
+        return count;        
+    }
+}
