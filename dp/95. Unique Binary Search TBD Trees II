@@ -1,0 +1,34 @@
+1、dfs
+class Solution {
+    public List<TreeNode> generateTrees(int n) {
+        List<TreeNode> res = helper(1, n);  
+        if(res.get(0) == null){
+            return new LinkedList<>();
+        }else{
+            return res;
+        }
+    }
+    private List<TreeNode> helper(int start, int end){
+        List<TreeNode> curr = new LinkedList<>();
+        if(start > end){
+            curr.add(null);//重要，不能直接返回null，否则for(TreeNode left : lefts)会踩空指针
+            return curr;
+        }
+        
+        for(int i = start; i <= end; i ++){
+            List<TreeNode> lefts = helper(start, i-1);//左边所有数字组成的所有树的根节点的集合
+            List<TreeNode> rights = helper(i+1, end);
+            for(TreeNode left : lefts){
+                for(TreeNode right : rights){
+                    TreeNode node = new TreeNode(i);
+                    node.left = left;
+                    node.right = right;
+                    curr.add(node);
+                }
+            }
+        }
+        return curr;
+    }
+}
+
+2、dp
