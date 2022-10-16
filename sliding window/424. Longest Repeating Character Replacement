@@ -31,7 +31,8 @@ s consists of only uppercase English letters.
   - 移动右指针，计算窗口内最高频字母的出现个数；
   - 如果最高频字母出现次数(MostFreqCount) + k = 窗口长度，则可能找到一个解；
   - 此时继续移动右指针，如果MostFreqCount并没有增大，则此时k已经不够替换其他字符，说明以left为起点的子串，最大长度已经出现过了，right指针已经没有右移的必要；
-  - 此时继续
+  - 此时左指针+1，继续考量新的left为起点的子串，将left字符计数减1，此时当前窗口内真实的MostFreqCount可能减少甚至不变(对结果没有意义)，但是按照贪心策略，仍以之前最大的MostFreqCount+k的窗口长度往前移动；
+  - 只有right指针的增加，引入了新字符，导致MostFreqCount增加时，窗口才会变大(MostFreqCount+k)
 ```java
 
 class Solution {
