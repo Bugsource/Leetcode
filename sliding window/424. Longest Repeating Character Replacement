@@ -1,0 +1,60 @@
+# 题目
+You are given a string s and an integer k. You can choose any character of the string and change it to any other uppercase English character. You can perform this operation at most k times.
+
+Return the length of the longest substring containing the same letter you can get after performing the above operations.
+
+ 
+
+Example 1:
+```
+Input: s = "ABAB", k = 2
+Output: 4
+Explanation: Replace the two 'A's with two 'B's or vice versa.
+```
+Example 2:
+```
+Input: s = "AABABBA", k = 1
+Output: 4
+Explanation: Replace the one 'A' in the middle with 'B' and form "AABBBBA".
+The substring "BBBB" has the longest repeating letters, which is 4.
+```
+
+Constraints:
+```
+1 <= s.length <= 105
+s consists of only uppercase English letters.
+0 <= k <= s.length
+```
+# 解法
+双指针 + 贪心
+关键点：
+  - 移动右指针，计算窗口内最高频字母的出现个数；
+  - 如果最高频字母出现次数(MostFreqCount) + k = 窗口长度，则可能找到一个解；
+  - 此时继续移动右指针，如果MostFreqCount并没有增大，则此时k已经不够替换其他字符，说明以left为起点的子串，最大长度已经出现过了，right指针已经没有右移的必要；
+  - 此时继续
+```java
+
+class Solution {
+    public int characterReplacement(String s, int k) {
+        int[] charToCountMap = new int[128];
+        int left = 0, maxLength = 0, historicMostFreqCount = 0;
+        for(int right = 0; right < s.length(); ++ right) {
+            // 更新当前出现过的最高频字母的次数
+            int currentCharCount = ++ charToCountMap[s.charAt(right)];
+            historicMostFreqCount = Math.max(historicMostFreqCount, currentCharCount);
+            // 当前窗口长度-最高频字母的出现次数 = 需要替换的字母数量
+            int replaceCount = right-left+1-historicMostFreqCount;
+            if(replaceCount > k) {
+                // 需要替换的数量大于k时，说明以left为起点的子串，right指针已经没有右移的必要
+                // 那么只能移动left指针，计算以left为起点的子串
+                // 此时正常做法是重新计算MostFreqCount，但是按照贪心策略，仍以MostFreqCount+k的窗口长度往前移动；如果left指针字符计数减少，导致MostFreqCount减少，说明当前窗口对结果没有意义；只有右指针的移动引入了新字符，导致MostFreqCount增加时，窗口才会变大
+                -- charToCountMap[s.charAt(left)];
+                ++ left;
+            } else {
+                maxLength = Math.max(maxLength, right-left+1);
+            }
+        }
+        return maxLength;
+    }
+}
+```
