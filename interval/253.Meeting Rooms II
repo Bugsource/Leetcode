@@ -3,3 +3,38 @@ This problem can be solved using the greedy method. We sort the intervals using 
 If ts < te, that means the interval with start time ts can not be merged with the all the previous intervals since te is the minimum end time. So we start a new room. 
 If ts >= te,  this means the interval with start time ts can be merged with the room with end time te. 
 We can use a priority query to record the end time, so we can get the minimum end time in O(logN) time. 
+
+
+public class MinMeetingRooms {
+
+    public class Interval {
+        int start, end;
+
+        Interval(int start, int end) {
+            this.start = start;
+            this.end = end;
+        }
+    }
+
+    /**
+     * 扫描线算法，核心在于对区间排序，遇到起点则cost+1，遇到终点则cost-1，代表一间会议室可以关闭
+      * @param intervals
+     * @return
+     */
+    public int minMeetingRooms(List<Interval> intervals) {
+        TreeMap<Integer, Integer> timeToCostMap = new TreeMap<>();
+        for(Interval interval: intervals) {
+            Integer startTime = interval.start;
+            Integer endTime = interval.end;
+            timeToCostMap.put(startTime, timeToCostMap.getOrDefault(startTime, 0) + 1);
+            timeToCostMap.put(endTime, timeToCostMap.getOrDefault(endTime, 0) - 1);
+        }
+        int res = 0;
+        Integer currentRoomCount = 0;
+        for(Map.Entry<Integer, Integer> entry: timeToCostMap.entrySet()) {
+            currentRoomCount += entry.getValue();
+            res = Math.max(res, currentRoomCount);
+        }
+        return res;
+    }
+}
