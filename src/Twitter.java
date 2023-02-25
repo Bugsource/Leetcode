@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -19,7 +20,7 @@ public class Twitter {
     }
 
     public List<Integer> getNewsFeed(int userId) {
-
+        return new ArrayList<>();
     }
 
     public void follow(int followerId, int followeeId) {
