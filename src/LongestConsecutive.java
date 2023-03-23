@@ -1,4 +1,6 @@
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class LongestConsecutive {
 
@@ -51,5 +53,11 @@ public class LongestConsecutive {
         int[] input4 = new int[]{9, 1, 4, 7, 3, -1, 0, 5, 8, -1, 6};
         System.out.println("res4:" + l.longestConsecutive(input4));
 
+        List<String> bb = new ArrayList<>();
+        bb.add("aa");
+        bb.add("bb");
+        List<Object> aa = new ArrayList<>(bb);
+
+        System.out.println(aa.toString());
     }
 }
