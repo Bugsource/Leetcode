@@ -64,6 +64,31 @@ public class MergeInterval {
         }
         return result.toArray(new int[result.size()][]);
     }
+
+    public int[][] merge3(int[][] intervals) {
+        TreeMap<Integer, Integer> startToEndTree = new TreeMap<>();
+
+        TreeMap<Integer, Integer> endToStartTree = new TreeMap<>();
+
+        for(int[] interval : intervals) {
+            int start = interval[0];
+            int end = interval[1];
+            // 寻找和当前线段交叠的最近的终点：离当前起点最近的，且比该起点大的终点
+            Map.Entry<Integer, Integer> endOverlapNearest = endToStartTree.ceilingEntry(start);
+            // 寻找和当前线段交叠的最近的起点：离当前终点最近的，且比该终点小的起点
+            Map.Entry<Integer, Integer> startOverlapNearest = startToEndTree.floorEntry(end);
+
+            if(endOverlapNearest == null && startOverlapNearest == null) {
+                // 找不到任何交叠对象，直接插入该线段
+                startToEndTree.put(start, end);
+                endToStartTree.put(end, start);
+            } else if(endOverlapNearest == null) {
+                // 找不到当前线段的前半段交叠对象，但是找到了后半段交叠对象，则将后半段交叠对象合并
+
+            }
+        }
+        return intervals;
+    }
     public static void main(String[] a) {
         int[][] input1 = {
             {1,3}, {2,6}, {8,10}, {15,18}
