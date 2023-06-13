@@ -46,6 +46,11 @@ public class ShippingSystem {
         return false;
     }
 
+    /**
+     * 获取订单最短路径
+     * @param order
+     * @return 符合订单要求的最短路径的港口id集合，从终点到起点
+     */
     public List<Integer> getShortestVoyagePath(Order order) {
         PriorityQueue<int[]> priorityQueue = new PriorityQueue<>((o1, o2) -> Integer.compare(o1[0], o2[0]));
         // 优先队列里存放数组，数组里第一个元素是起始点到当前点的最短距离，第二个元素是当前点，第三个元素是最短距离对应的上一个起点
