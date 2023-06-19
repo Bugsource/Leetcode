@@ -1,5 +1,6 @@
 package Company.Flexport;
 
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.PriorityQueue;
@@ -18,7 +19,7 @@ public class TradeSystem {
     private PriorityQueue<BuyOrder> buyOrderPriorityQueue;
 
     private TradeSystem() {
-        this.sellOrderPriorityQueue = new PriorityQueue<>();
+        this.sellOrderPriorityQueue = new PriorityQueue<>(Comparator.comparingInt(SellOrder::getOrderPrice));
         this.buyOrderPriorityQueue = new PriorityQueue<>();
     }
 
@@ -140,7 +141,7 @@ class Container {
 
 }
 
-class SellOrder implements Comparable<SellOrder> {
+class SellOrder {
     private String orderId;
     private Integer orderPrice;
     private Integer containerId;
@@ -175,10 +176,10 @@ class SellOrder implements Comparable<SellOrder> {
         System.out.println("this buy order had been settled, order price:" + this.orderPrice);
     }
 
-    @Override
-    public int compareTo(SellOrder other) {
-        return this.getOrderPrice().compareTo(other.orderPrice);
-    }
+//    @Override
+//    public int compareTo(SellOrder other) {
+//        return this.getOrderPrice().compareTo(other.orderPrice);
+//    }
 }
 
 class BuyOrder implements Comparable<BuyOrder> {
