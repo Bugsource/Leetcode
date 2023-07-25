@@ -7,8 +7,7 @@ import java.util.LinkedList;
 class AsteroidCollision {
     public int[] asteroidCollision(int[] asteroids) {
         Deque<Integer> deque = new LinkedList<>();
-        for (int i = 0; i < asteroids.length; ++i) {
-            int currAsteroid = asteroids[i];
+        for (int currAsteroid : asteroids) {
             if (currAsteroid > 0) {
                 // 向右的行星，不可能和之前的发生碰撞，直接入栈
                 deque.addLast(currAsteroid);
