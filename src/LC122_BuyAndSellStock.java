@@ -1,4 +1,4 @@
-public class BuyAndSellStock_122 {
+public class LC122_BuyAndSellStock {
 
     /**
      * Input: prices = [7,1,5,3,6,4]
