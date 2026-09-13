@@ -3,9 +3,12 @@ package Interval;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class MyCalendarOne {
+/**
+ * 预订时间段不能有交集。区间是左闭右开。
+ */
+public class LC729_MyCalendar1 {
     TreeMap<Integer, Integer> startToEndMap;
-    public MyCalendarOne() {
+    public LC729_MyCalendar1() {
         startToEndMap = new TreeMap<>();
     }
 
@@ -22,7 +25,7 @@ public class MyCalendarOne {
     }
 
     public static void main(String[] a) {
-        MyCalendarOne myCalendarOne = new MyCalendarOne();
+        LC729_MyCalendar1 myCalendarOne = new LC729_MyCalendar1();
 
 //        [[],[47,50],[33,41],[39,45],[33,42],[25,32],[26,35],[19,25],[3,8],[8,13],[18,27]]
         int[][] input1 = {

@@ -2,11 +2,14 @@ package Interval;
 
 import java.util.TreeMap;
 
-public class MyCalendarThree {
+/**
+ * 返回同一时间段，被多个事件预订的最大次数
+ */
+public class LC732_MyCalendar3 {
 
     TreeMap<Integer, Integer> timeToBookCountMap;
 
-    public MyCalendarThree() {
+    public LC732_MyCalendar3() {
         timeToBookCountMap = new TreeMap<>();
     }
 
