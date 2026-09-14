@@ -1,9 +1,21 @@
 package util;
 
+import java.util.Arrays;
+
 public class Util {
     public static void assertEquals(Object expected, Object actual) {
         if (!java.util.Objects.equals(expected, actual)) {
             throw new RuntimeException(String.format("Assertion Failed: Expected [%s], but got [%s]", expected, actual));
+        }
+    }
+
+    public static void assertArrayEquals(int[] expected, int[] actual) {
+        if (!Arrays.equals(expected, actual)) {
+            throw new RuntimeException(String.format(
+                    "Array Assertion Failed!\nExpected: %s\nActual:   %s",
+                    Arrays.toString(expected),
+                    Arrays.toString(actual)
+            ));
         }
     }
 
