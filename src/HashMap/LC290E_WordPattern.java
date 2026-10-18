@@ -62,16 +62,19 @@ public class LC290E_WordPattern {
         return true;
     }
 
-    // 网上看来的一个Map的版本；简洁但是稍显晦涩难懂。还有两个Map的实现，不如我一个Map + Set
+    // 网上看来的一个Map的版本；利用Character和String类型不同，使用单个Map，但实际上非常晦涩难懂；
+    // 所以我用两个Map的方式，按照LC205的思想实现了一遍
 
-    public boolean wordPattern2(String pattern, String str) {
-        String[] words = str.split(" ");
+    public boolean wordPattern2(String pattern, String s) {
+        String[] words = s.split(" ");
         //字符和单词是互相映射，数量必须相等
         if (words.length != pattern.length()) {
             return false;
         }
-        Map<Object, Integer> map = new HashMap<>();
-        for (Integer i = 0; i < words.length; i++) {
+        Map<Character, Integer> map1 = new HashMap<>();
+        Map<String, Integer> map2 = new HashMap<>();
+
+        for (int i = 0; i < words.length; i++) {
         /*
             如果key不存在，插入成功，返回null；如果key存在，返回之前对应的value。
 
@@ -89,7 +92,15 @@ public class LC290E_WordPattern {
             第4次：map.put('a',3)返回0，map.put("fish",3)返回null，两者不相等，
             结果为 false。
         */
-            if (map.put(pattern.charAt(i), i) != map.put(words[i], i)) {
+            Integer prevIndexInPattern = map1.put(pattern.charAt(i), i);
+            Integer prevIndexInWords = map2.put(words[i], i);
+            if(prevIndexInPattern == null && prevIndexInWords == null) {
+            }
+            else if (prevIndexInPattern != null && prevIndexInWords != null) {
+                if(!prevIndexInPattern.equals(prevIndexInWords)) {
+                    return false;
+                }
+            } else {
                 return false;
             }
         }
