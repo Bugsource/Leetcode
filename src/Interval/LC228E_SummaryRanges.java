@@ -44,6 +44,7 @@ public class LC228E_SummaryRanges {
         return res;
     }
 
+    // 双循环写法，但是免去特殊处理
     public static List<String> summaryRanges1(int[] nums) {
         List<String> res = new ArrayList<>();
         if(nums == null || nums.length == 0){
