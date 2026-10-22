@@ -17,42 +17,27 @@ public class LC20E_ValidParentheses {
 
     public static boolean isValid(String s) {
         if(s.length() % 2 != 0) {
-            // 优化：奇数长度直接返回 false
+            // 剪枝优化：奇数长度直接返回 false
             return false;
         }
         Deque<Character> stack = new ArrayDeque<>();
-        for(int i = 0; i < s.length(); ++ i) {
-            char letter = s.charAt(i);
-            if(letter == ')') {
-                if(!check(stack, '(')) {
-                    return false;
-                }
-            } else if(letter == '}') {
-                if(!check(stack, '{')) {
-                    return false;
-                }
-            } else if(letter == ']') {
-                if(!check(stack, '[')) {
-                    return false;
-                }
+        for(char letter : s.toCharArray()) {
+            if(letter == '(') {
+                stack.push(')');
+            } else if(letter == '{') {
+                stack.push('}');
+            } else if(letter == '[') {
+                stack.push(']');
             } else {
-                stack.push(letter);
+                if(stack.isEmpty() || stack.pop() != letter){
+                    return false;
+                }
             }
         }
         return stack.isEmpty();
     }
 
-    private static Boolean check(Deque<Character> stack, Character validOpen) {
-        if(!stack.isEmpty()) {
-            Character peek = stack.pop();
-            return peek.equals(validOpen) ;
-        } else {
-            return false;
-        }
-    }
-
     public static void main(String[] args) {
-
         String s1 = "([])";
         assertTrue(isValid(s1));
     }
