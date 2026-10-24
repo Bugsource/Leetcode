@@ -22,6 +22,7 @@ public class LC20E_ValidParentheses {
         }
         Deque<Character> stack = new ArrayDeque<>();
         for(char letter : s.toCharArray()) {
+            // push进去对应的符号，避免了维护map
             if(letter == '(') {
                 stack.push(')');
             } else if(letter == '{') {
