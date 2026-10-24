@@ -50,8 +50,5 @@ public class LC373_FindKPairsWithSmallestSums {
         int[] nums1 = {1,2,4,5,6};
         int[] nums2 = {3,5,7,9};
         kSmallestPairs(nums1, nums2, 3);
-//        int[] nums2 = {30,40,50,60};
-//        int[] res2 = {1,1,1,0};
-//        assertArrayEquals(res2, dailyTemperatures(nums2));
     }
 }
