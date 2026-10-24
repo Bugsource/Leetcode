@@ -36,6 +36,34 @@ public class LC138M_CopyListWithRandomPointer {
 
         return newHead;
     }
+
+    // todo:O(1)空间复杂度的做法，不能用map；
+    // 思路是把深拷贝节点先连接到每个原始节点后面，利用物理位置临近，将新链表的随机指针关联起来；然后再拆分链表
+
+    // 基础：深拷贝链表，不需要map
+    public Node copyPlainList(Node head) {
+        if (head == null) return null;
+
+        // 创建哨兵节点，简化头节点处理
+        Node dummy = new Node(0);
+        Node prevNew = dummy;      // 指向新链表的最后一个节点
+        Node curOld = head;        // 指向原链表的当前节点
+
+        while (curOld != null) {
+            // 1. 创建新节点
+            Node newNode = new Node(curOld.val);
+
+            // 2. 将新节点接到新链表末尾
+            prevNew.next = newNode;
+
+            // 3. 指针后移
+            prevNew = newNode;     // 新链表指针移到最新节点
+            curOld = curOld.next;  // 原链表指针移到下一个
+        }
+
+        return dummy.next;
+    }
+
 }
 
 
