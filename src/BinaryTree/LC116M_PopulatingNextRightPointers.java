@@ -44,8 +44,9 @@ public class LC116M_PopulatingNextRightPointers {
                     // 完美二叉树，左孩子为空，意味着到了最后一层
                     break;
                 }
-
+                // 同一父节点的左右子节点连接
                 node.left.next = node.right;
+                // 跨父节点的连接：当前节点的右孩子 -> 下一个节点的左孩子
                 if(node.next != null) {
                     node.right.next = node.next.left;
                 }
