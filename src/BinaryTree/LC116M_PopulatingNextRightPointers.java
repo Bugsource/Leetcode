@@ -1,14 +1,17 @@
 package BinaryTree;
 
+import java.util.ArrayDeque;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class PopulatingNextRightPointers_116 {
+// 完美二叉树，除叶子节点外，‌每个节点都有两个子节点‌，且‌所有叶子节点都在同一层‌；
+// 要求把所有兄弟节点连接起来。
+public class LC116M_PopulatingNextRightPointers {
     public static Node connect(Node root) {
         if(root == null) {
             return root;
         }
-        Queue<Node> nodeQueue = new LinkedList<>();
+        Queue<Node> nodeQueue = new ArrayDeque<>();
         nodeQueue.offer(root);
         while (!nodeQueue.isEmpty()) {
             int levelNodeCount = nodeQueue.size();
@@ -26,6 +29,31 @@ public class PopulatingNextRightPointers_116 {
                     nodeQueue.offer(curr.left);
                 }
             }
+        }
+        return root;
+    }
+
+    // O(1)空间解法，不需要借助队列
+    public Node connectOpt(Node root) {
+        Node currLevelStart = root;
+        while (currLevelStart != null) {
+
+            Node node = currLevelStart;
+            while (node != null){
+                if(node.left == null) {
+                    // 完美二叉树，左孩子为空，意味着到了最后一层
+                    break;
+                }
+
+                node.left.next = node.right;
+                if(node.next != null) {
+                    node.right.next = node.next.left;
+                }
+
+                node = node.next;
+            }
+            // 移动到下一层，利用完美二叉树的性质，如果下一层是叶子节点，那下一次迭代退出循环
+            currLevelStart = currLevelStart.left;
         }
         return root;
     }
