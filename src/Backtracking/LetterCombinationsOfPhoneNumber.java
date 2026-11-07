@@ -1,8 +1,6 @@
 package Backtracking;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class LetterCombinationsOfPhoneNumber {
 
@@ -55,4 +53,58 @@ public class LetterCombinationsOfPhoneNumber {
             currRes.deleteCharAt(currRes.length() - 1);
         }
     }
+
+    // 映射表：索引对应数字，值对应字母字符串
+    private static final String[] MAPPING = {
+            "", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"
+    };
+
+    /**
+     * 以输入 digits = "23" 为例，代码执行流程如下：
+     * <p>
+     * ‌初始化‌：
+     * 队列 queue: [""]
+     * ‌处理第一个数字 '2' ("abc")‌：
+     * <p>
+     * size = 1 (当前队列只有 "")
+     * 取出 ""，分别追加 'a', 'b', 'c'
+     * 队列 queue: ["a", "b", "c"]
+     * ‌处理第二个数字 '3' ("def")‌：
+     * <p>
+     * size = 3 (当前队列有 "a", "b", "c")
+     * 取出 "a"，追加 'd', 'e', 'f' → 生成 "ad", "ae", "af" 入队
+     * 取出 "b"，追加 'd', 'e', 'f' → 生成 "bd", "be", "bf" 入队
+     * 取出 "c"，追加 'd', 'e', 'f' → 生成 "cd", "ce", "cf" 入队
+     * 队列 queue: ["ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"]
+     * ‌结束‌：
+     * <p>
+     * 数字处理完毕，将队列转换为列表返回。
+     */
+    public List<String> letterCombinationsBFS(String digits) {
+        if (digits == null || digits.isEmpty()) {
+            return new ArrayList<>();
+        }
+
+        Deque<String> deque = new ArrayDeque<>();
+        deque.offer("");// 初始状态：空字符串
+
+        for(char digitChar  : digits.toCharArray()) {
+            int digit = digitChar - '0';
+            String letters = MAPPING[digit];
+
+            // 当前队列大小即为“上一层”生成的组合数量
+            int levelCount = deque.size();
+            // 遍历上一层的所有组合，进行扩展
+            while(levelCount > 0) {
+                -- levelCount;
+                String prefix = deque.poll();// 取出旧组合
+                // 将当前数字对应的每个字母追加到旧组合后，形成新组合入队
+                for(char letter : letters.toCharArray()) {
+                    deque.offer(prefix + letter);
+                }
+            }
+        }
+        return new ArrayList<>(deque);
+    }
+
 }
